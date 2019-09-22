@@ -20,7 +20,20 @@ still had company with this adorable kitty.This is a solid choice for any meal. 
     <?php
         function highlighter($str, $arr_word){
             foreach($arr_word as $vword) {
-                $str = preg_replace("/($vword)/Ui", "<span class=highlight>$1</span>", $str);
+
+// added by dj: to check whether target word is preceeded by a negative word
+                $targetWordPosition  = strpos($str, $vword);
+                if(  $targetWordPosition  !== false) {
+                    $found = TRUE;
+                    // check whether the word is preceded by negative word
+                    $preceededWordPosition =  strpos($str, 'not' , $targetWordPosition - 5 ); // start search before 5 characters target word
+                    if($preceededWordPosition == false || $preceededWordPosition > $targetWordPosition ){ // if not word is found and is before the target word 
+                        $str = preg_replace("/($vword)/Ui", "<span class=highlight>$1</span>", $str); // string is highlighted as there is no preceding negative word
+                    }
+
+                }
+// end of modification by dj               
+                
             }
             return $str;
         }
@@ -28,9 +41,20 @@ still had company with this adorable kitty.This is a solid choice for any meal. 
         function search($text, $word_dic){
             $found = FALSE;
             foreach ($word_dic as $word) {
-                if( strpos( $text, $word ) !== false) {
+// added by dj 
+                // take the position of the target word in the word dictionary
+                $targetWordPosition  = strpos($text, $word);
+                if(  $targetWordPosition  !== false) {
                     $found = TRUE;
-            }
+                    // check whether the word is preceded by not word
+                    $preceededWordPosition =  strpos($text, 'not' , $targetWordPosition - 5 ); // start search before 5 characters target word
+                    if($preceededWordPosition !== false && $preceededWordPosition < $targetWordPosition ){ // if not word is found and is before the target word 
+                        $found = FALSE;  //  as the word conveys opposite meaning it is removed
+                    }
+
+                }
+//  end of modification by dj
+                
             return $found;
             }
         }
