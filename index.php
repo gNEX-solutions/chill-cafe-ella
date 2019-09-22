@@ -97,16 +97,19 @@ still had company with this adorable kitty.This is a solid choice for any meal. 
         while (($line = fgetcsv($f)) !== false) {
             // echo (search($line[1], $positive_dictionary));
             // print_r ($line);
-            if (search($line[5], $positive_dictionary)) {
+            // to remove arrays with lees number of elements : added by dj
+            if(count($line) > 5 ){
+                if (search($line[5], $positive_dictionary)) {
 
-                echo "<tr>";
-                echo "<td>".$line[0]."</td>";
-                echo "<td>".$line[1]."</td>";
-                echo "<td>".$line[2]."</td>";
-                echo "<td>".$line[3]."</td>";
-                echo "<td>".$line[4]."</td>";
-                echo "<td>".highlighter($line[5], $positive_dictionary)."</td>";
-                echo "<tr>\n";
+                    echo "<tr>";
+                    echo "<td>".$line[0]."</td>";
+                    echo "<td>".$line[1]."</td>";
+                    echo "<td>".$line[2]."</td>";
+                    echo "<td>".$line[3]."</td>";
+                    echo "<td>".$line[4]."</td>";
+                    echo "<td>".highlighter($line[5], $positive_dictionary)."</td>";
+                    echo "<tr>\n";
+                }
             }
         }
         fclose($f);
@@ -137,17 +140,21 @@ still had company with this adorable kitty.This is a solid choice for any meal. 
         $f = fopen("reviews_1_to_250.csv", "r");
         while (($line = fgetcsv($f)) !== false) {
             // echo (search($line[1], $negative_dictionary));
-            if (search($line[5], $negative_dictionary)) {
+            // to remove arrays with lees number of elements : added by dj
+            if(count($line) > 5 ){
+                if (search($line[5], $negative_dictionary)) {
 
-                echo "<tr>";
-                echo "<td>".$line[0]."</td>";
-                echo "<td>".$line[1]."</td>";
-                echo "<td>".$line[2]."</td>";
-                echo "<td>".$line[3]."</td>";
-                echo "<td>".$line[4]."</td>";
-                echo "<td>".highlighter($line[5], $negative_dictionary)."</td>";
-                echo "<tr>\n";
+                    echo "<tr>";
+                    echo "<td>".$line[0]."</td>";
+                    echo "<td>".$line[1]."</td>";
+                    echo "<td>".$line[2]."</td>";
+                    echo "<td>".$line[3]."</td>";
+                    echo "<td>".$line[4]."</td>";
+                    echo "<td>".highlighter($line[5], $negative_dictionary)."</td>";
+                    echo "<tr>\n";
+                }
             }
+            
         }
         fclose($f);
         echo "\n</table>";
