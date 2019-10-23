@@ -38,24 +38,24 @@ still had company with this adorable kitty.This is a solid choice for any meal. 
             return $str;
         }
     
-        function search($text, $word_dic){
-            $found = FALSE;
+        function search($paragraphText, $word_dic){
+            $wordFound = FALSE;
             foreach ($word_dic as $word) {
 // added by dj 
                 // take the position of the target word in the word dictionary
-                $targetWordPosition  = strpos($text, $word);
+                $targetWordPosition  = strpos($paragraphText, $word);
                 if(  $targetWordPosition  !== false) {
-                    $found = TRUE;
+                    $wordFound = TRUE;
                     // check whether the word is preceded by not word
-                    $preceededWordPosition =  strpos($text, 'not' , $targetWordPosition - 5 ); // start search before 5 characters target word
+                    $preceededWordPosition =  strpos($paragraphText, 'not' , $targetWordPosition - 5 ); // start search before 5 characters target word
                     if($preceededWordPosition !== false && $preceededWordPosition < $targetWordPosition ){ // if not word is found and is before the target word 
-                        $found = FALSE;  //  as the word conveys opposite meaning it is removed
+                        $wordFound = FALSE;  //  as the word conveys opposite meaning it is removed
                     }
 
                 }
 //  end of modification by dj
                 
-            return $found;
+            return $wordFound;
             }
         }
     ?>
